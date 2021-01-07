@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 //import React, { useState } from 'react';
 import './App.css';
-  
+import { Redirect } from "react-router-dom";
+
 class App extends Component {
   state = {
     amount:'',
@@ -24,10 +25,12 @@ class App extends Component {
     let result=this.doFetch(formData)
     result.then((v)=>{
         console.log(v);
-        if(v=="qualified"){
+        if(v==="qualified"){
             //sign up page
+            return <Redirect to="/ApplyPage" />
         }else{
             //reject page
+            return <Redirect to="/ApplyPage" />
         }
         });
   }

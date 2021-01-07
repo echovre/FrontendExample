@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
   
-class  extends Component {
-      state = {
+class Apply extends Component {
+  state = {
       email:'',
       password:'',
       password2:'',
@@ -14,13 +14,14 @@ class  extends Component {
   }
 
   hasNumberOrChar = (event) => {
+  console.log(event)
     var matches = event.match(/\d+/g);
     if (matches != null) {
         return true;
     }
     var iChars = "~`!#$%^&*+=-[]\\\';,/{}|\":<>?";
-    for (var i = 0; i < chkfile.value.length; i++){
-      if (iChars.indexOf(chkfile.value.charAt(i)) != -1)  {
+    for (var i = 0; i < event.length; i++){
+      if (iChars.indexOf(event.charAt(i)) != -1)  {
           return true;
       }
      return false;
@@ -34,18 +35,20 @@ class  extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     
-    if(!this.hasNumberOrChar(password)){
+    if(!this.hasNumberOrChar(this.state.password)){
         this.setState({ message : "Password must contain at least one number or special character" })
-    }else if(!this.pwLength(password)){
+    }else if(!this.pwLength(this.state.password)){
         this.setState({ message : "Password must be at least 8 characters" })
     }else{
         
         let formData={}
         formData.email=this.state.email
-        formData.password=encrypt(this.state.password)
+        formData.password=this.encrypt(this.state.password)
 
         let payload=JSON.stringify(formData)
         console.log(payload)
+        
+        this.setState({ message : "Submitting... (does nothing right now)" })
 
         var request = new XMLHttpRequest();
         request.open('POST', '/example/api/call', true);
@@ -56,36 +59,38 @@ class  extends Component {
  
   onEmailChange = (event) => {
     this.setState({ email : event.target.value })
-    if(event.target.value.contains("@") && event.target.value.contains(".")){
+    const asString=event.target.value;
+    if(asString.includes("@") && asString.includes(".")){
         this.setState({ message : "" })
     }else{
         this.setState({ message : "Invalid email address." })
     }
     console.log(event.target.value);
   };
+  
   onPasswordChange = (event) => {
-    this.setState({ password : event.target.value })
-    if(password2!=password){
-        this.setState({ message : "Passwords dont match." })
-    }else{
-        this.setState({ message : "" })
-    }
+    this.setState({ password : event.target.value }, ()=>{this.setPasswordMatches()})
     console.log(event.target.value);
   };
   onPassword2Change = (event) => {
-    this.setState({ password2 : event.target.value })
-    if(password2!=password){
-        this.setState({ message : "Passwords dont match." })
-    }else{
-        this.setState({ message : "" })
-    }
+    this.setState({ password2 : event.target.value }, ()=>{this.setPasswordMatches()})
     console.log(event.target.value);
   };
+
+  setPasswordMatches = () => {
+    console.log("password"+this.state.password);
+        console.log("password2"+this.state.password2);
+    if(this.state.password2===this.state.password){
+        this.setState({ message : "" })
+    }else{
+        this.setState({ message : "Passwords dont match." })
+    }
+  }
   
 render(){
   return(
     <div className="wrapper">
-      <h1>Lorum Ipsem Youve Qualified Lorum Ipsem</h1>
+      <h1>Lorum Ipsem Youve Qualified</h1>
 
       <form onSubmit={this.handleSubmit}>
         <fieldset><label>
