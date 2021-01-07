@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import Apply from './apply';
+import Reject from './reject';
 import reportWebVitals from './reportWebVitals';
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -14,6 +15,9 @@ ReactDOM.render(
       </Route>
       <Route path="/ApplyPage">
         <Apply/>
+      </Route>
+      <Route path="/RejectPage">
+        <Reject/>
       </Route>
   </Router> ,
   document.getElementById('root')

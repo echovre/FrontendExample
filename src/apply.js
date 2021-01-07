@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
+
+import { withRouter } from 'react-router-dom';
   
 class Apply extends Component {
   state = {
@@ -126,4 +128,4 @@ render(){
 }
 }
 
-export default Apply;
+export default withRouter(Apply);

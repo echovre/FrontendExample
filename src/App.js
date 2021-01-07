@@ -3,8 +3,12 @@ import React, { Component } from 'react';
 import './App.css';
 import { Redirect } from "react-router-dom";
 
+import { withRouter } from 'react-router-dom';
+
 class App extends Component {
-  state = {
+  constructor(props){
+  super(props);
+  this.state = {
     amount:'',
     type:'',
     worth:'',
@@ -12,7 +16,8 @@ class App extends Component {
     credit:'',
     message:''
   }
-
+  }
+  
   handleSubmit = (event) => {
     event.preventDefault();
     
@@ -26,11 +31,9 @@ class App extends Component {
     result.then((v)=>{
         console.log(v);
         if(v==="qualified"){
-            //sign up page
-            return <Redirect to="/ApplyPage" />
+            this.props.history.push("/ApplyPage")
         }else{
-            //reject page
-            return <Redirect to="/ApplyPage" />
+            this.props.history.push("/RejectPage")
         }
         });
   }
@@ -142,4 +145,4 @@ render(){
 }
 }
 
-export default App;
+export default withRouter(App);
